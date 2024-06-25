@@ -1,0 +1,28 @@
+Packages : 
+Spring Web MVC
+lombok
+jstl
+mysql-connector-j
+modelmapper
+
+
+base-package (for controller) : 
+spring.controller
+
+views:
+/WEB-INF/jsp/*.jsp
+
+modelmapper configuration :
+ModelMapperConfiguration Bean in spring.controller
+
+model beans :
+spring.model
+
+dto classes :
+spring.dto
+
+database classes:
+spring.service
+
+replace name and password in ConnectionClass in spring.service for Database Access
+
