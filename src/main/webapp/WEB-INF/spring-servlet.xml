@@ -28,5 +28,6 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 		<property name="basename" value="messages" />
 	</bean>
 	
+	<bean id="categoryService" class="spring.service.CategoryService"></bean>
 
 </beans>

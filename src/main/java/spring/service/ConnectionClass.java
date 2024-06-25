@@ -11,7 +11,7 @@ public class ConnectionClass {
 		Connection con=null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con=DriverManager.getConnection("");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory_management_system", "root", "admin");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Loading Driver : "+ e.getMessage());
 		} catch (SQLException e) {

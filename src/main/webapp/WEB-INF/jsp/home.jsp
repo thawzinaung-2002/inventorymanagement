@@ -4,10 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Testing</title>
+<title>Inventory Management System</title>
 </head>
 <body>
-	<h2>Hello World</h2>
-	<p>Project is working. Create more</p>
+
+	Home
+	<a href="category/lists">Categories</a>
+	<a href="product/lists">Products</a>
+
 </body>
 </html>
