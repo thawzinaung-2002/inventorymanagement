@@ -29,5 +29,8 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 	</bean>
 	
 	<bean id="categoryService" class="spring.service.CategoryService"></bean>
+	<bean id="productLotService" class="spring.service.ProductLotService"></bean>
+	<bean id="lotService" class="spring.service.LotService"></bean>
+	<bean id="productService" class="spring.service.ProductService"></bean>
 
 </beans>
