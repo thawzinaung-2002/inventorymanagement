@@ -10,8 +10,9 @@
 <title>Add new Category</title>
 </head>
 <body>
-
+	
 	<form:form action="add" method="post" modelAttribute="category">
+		<form:errors path="*"></form:errors>
 		<h2>Category Add</h2>
 		<form:label path="name">Name</form:label>
 		<form:input type="text" path="name" /> <br/><br/>

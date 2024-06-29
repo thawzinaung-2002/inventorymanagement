@@ -62,18 +62,26 @@ public static int num = 1;
 	@GetMapping(value="/lists")
 	public String showProducts(ModelMap model)
 	{
-		List<ProductLotDTO> dbRs = productLotService.getAll();
+		List<ProductDTO> dbRs = productService.getAll();
 		model.addAttribute("products", dbRs);
 		return "product-lists";
+	}
+	
+	@GetMapping(value="/more/{id}")
+	public String showMore(@PathVariable("id")String id, ModelMap model)
+	{
+		List<ProductLotDTO> dbRs = productLotService.getOneById(id);
+		model.addAttribute("products", dbRs);
+		return "product-details";
 	}
 	
 	@GetMapping(value="/add")
 	public String showAdd(ModelMap model)
 	{
-		ProductLotBean bean = new ProductLotBean();
+		ProductBean bean = new ProductBean();
 		bean.setCategory(getCategories().get(0));
 		bean.setUom(getUoms().get(0));
-		model.addAttribute("productLot", bean);
+		model.addAttribute("product", bean);
 		return "product-add";
 	}
 	

@@ -24,7 +24,7 @@ public class ProductLotService {
 		List<ProductLotDTO> products = new ArrayList<>();
 		try {
 			PreparedStatement ps = con.prepareStatement(
-					"select p.name,quantity,price,uom,lot_no,expired,c.name category from product p inner join lot l on p.id=l.name_id inner join category c on c.id=l.category_id");
+					"select p.name,quantity,price,uom,lot_no,expired,c.name category from product p inner join lot l on p.id=l.name_id inner join category c on c.id=p.category_id");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				ProductLotDTO product = new ProductLotDTO();
@@ -52,15 +52,13 @@ public class ProductLotService {
 		if (dbRs) {
 			try {
 				PreparedStatement ps = con.prepareStatement(
-						"INSERT INTO lot (lot_no, name_id, quantity, uom, expired, price, category_id) VALUES (?,(select id from product where name=?),?,?,?,?,?)");
+						"INSERT INTO lot (lot_no, name_id, quantity, uom, expired, price) VALUES (?,(select id from product where name=?),?,?,?,?)");
 				ps.setString(1, dto.getLot());
 				ps.setString(2, dto.getName());
 				ps.setInt(3, dto.getQuantity());
 				ps.setString(4, dto.getUom());
 				ps.setString(5, dto.getExpired());
 				ps.setDouble(6, dto.getPrice());
-				System.out.println(dto.getCategory());
-				ps.setString(7, dto.getCategory());
 				result = ps.executeUpdate();
 			} catch (SQLException e) {
 				System.out.println("Insert Product Lot : " + e.getMessage());
@@ -69,10 +67,10 @@ public class ProductLotService {
 			try {
 				ProductDTO productDto = new ProductDTO();
 				productDto.setName(dto.getName());
-				productDto.setCategory_id(dto.getCategory());
+				productDto.setCategory(dto.getCategory());
 				pService.insertOne(productDto);
 				PreparedStatement ps1 = con.prepareStatement(
-						"INSERT INTO lot (lot_no, name_id, quantity, uom, expired, price, category_id) VALUES (?,(select id from product where name=?),?,?,?,?,(select id from category where name=?))");
+						"INSERT INTO lot (lot_no, name_id, quantity, uom, expired, price) VALUES (?,(select id from product where name=?),?,?,?,?)");
 				con.setAutoCommit(false);
 				ps1.setString(1, dto.getLot());
 				ps1.setString(2, dto.getName());
@@ -80,7 +78,6 @@ public class ProductLotService {
 				ps1.setString(4, dto.getUom());
 				ps1.setString(5, dto.getExpired());
 				ps1.setDouble(6, dto.getPrice());
-				ps1.setString(7, dto.getCategory());
 				ps1.executeUpdate();
 				con.commit();
 			} catch (SQLException e) {
@@ -165,6 +162,34 @@ public class ProductLotService {
 		}
 
 		return product;
+	}
+	
+	public List<ProductLotDTO> getOneById(String id) {
+		Connection con = ConnectionClass.getConnection();
+		List<ProductLotDTO> products = new ArrayList<>();
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(
+					"select p.name,quantity,price,uom,lot_no,expired,c.name category from product p inner join lot l on p.id=l.name_id inner join category c on c.id=l.category_id where name_id=?");
+			ps.setString(1, id);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ProductLotDTO product = new ProductLotDTO();
+				product.setCategory(rs.getString("category"));
+				product.setExpired(rs.getString("expired"));
+				product.setLot(rs.getString("lot_no"));
+				product.setName(rs.getString("name"));
+				product.setPrice(rs.getDouble("price"));
+				product.setQuantity(rs.getInt("quantity"));
+				product.setUom(rs.getString("uom"));
+				products.add(product);
+			}
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Get Lot : " + e.getMessage());
+		}
+
+		return products;
 	}
 
 }

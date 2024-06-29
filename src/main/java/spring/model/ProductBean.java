@@ -7,6 +7,6 @@ public class ProductBean {
 
 	private String id;
 	private String name;
-	private String category_id;
+	private String category;
 	
 }

@@ -23,7 +23,7 @@ public class ProductService {
 				ProductDTO product = new ProductDTO();
 				product.setName(rs.getString("name"));
 				product.setId(rs.getInt("id")+"");
-				product.setCategory_id(rs.getInt("category_id")+"");
+				product.setCategory(rs.getInt("category_id")+"");
 				products.add(product);
 			}
 			con.close();
@@ -98,7 +98,7 @@ public class ProductService {
 		try {
 			PreparedStatement ps = con.prepareStatement("INSERT INTO product (name, category_id) VALUES (?, ?)");
 			ps.setString(1, dto.getName());
-			ps.setInt(2, Integer.valueOf(dto.getCategory_id()));
+			ps.setInt(2, Integer.valueOf(dto.getCategory()));
 			ps.executeUpdate();
 			con.close();
 		} catch (SQLException e) {
